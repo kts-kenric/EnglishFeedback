@@ -22,6 +22,8 @@ def get_tokenizer(model_name = "microsoft/deberta-v3-small"):
     print('len(tokenizer)', len(tokenizer)) #128001
     return tokenizer
 
+
+#will test MultilabelStratifiedKFold afterwards
 def make_fold(ds_train_path,ds_test_path):
     df_train = pd.read_csv(ds_train_path)
     df_test = pd.read_csv(ds_test_path)
