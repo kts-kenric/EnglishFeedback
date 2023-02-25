@@ -42,7 +42,8 @@ def do_valid(net, valid_loader):
         valid_metric += batch_size*np.square(loss1.data.cpu().numpy())
 
         # ------------------------------------------------
-        print('\r %8d / %d %s %s'%(valid_num, len(valid_loader.dataset),str(time.time() - start_timer),'sec'),end='',flush=True)
+        print('\r %8d / %d  %s' % (valid_num, len(valid_loader.dataset), time_to_str(time.time() - start_timer, 'sec')),
+              end='', flush=True)
 
     torch.cuda.empty_cache()
     assert(valid_num == len(valid_loader.dataset))
@@ -165,6 +166,22 @@ def run_train():
         print('rate     iter  epoch | dice   loss   tp     tn     | loss           | time           \n')
         print('-------------------------------------------------------------------------------------\n')
 
+        def message(mode='print'):
+            asterisk = ' '
+            if mode == ('print'):
+                loss = batch_loss
+            if mode == ('log'):
+                loss = train_loss
+                if (iteration % iter_save == 0): asterisk = '*'
+
+            text = \
+                ('%0.2e   %08d%s %6.2f | ' % (rate, iteration, asterisk, epoch,)).replace('e-0', 'e-').replace('e+0',
+                                                                                                               'e+') + \
+                '%4.3f  %4.3f  %4.4f  | ' % (*valid_loss,) + \
+                '%4.3f  %4.3f  %4.3f  | ' % (*loss,) + \
+                '%s' '%s' % (time_to_str(timer() - start_timer, 'min'))
+
+            return text
 
         valid_loss = np.zeros(3, np.float32)
         train_loss = np.zeros(3, np.float32)
