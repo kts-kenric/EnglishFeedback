@@ -179,7 +179,7 @@ def run_train():
                                                                                                                'e+') + \
                 '%4.3f  %4.3f  %4.4f  | ' % (*valid_loss,) + \
                 '%4.3f  %4.3f  %4.3f  | ' % (*loss,) + \
-                '%s' '%s' % (time_to_str(timer() - start_timer, 'min'))
+                '%s' % (time_to_str(time.time() - start_timer, 'min'))
 
             return text
 
@@ -265,10 +265,10 @@ def run_train():
 
                 print('\r', end='', flush=True)
 
-                print(message(batch_loss, train_loss, valid_loss, iteration, iter_save, rate, epoch, start_timer,
-                            mode='print'), end='', flush=True)
+                # print(message(batch_loss, train_loss, valid_loss, iteration, iter_save, rate, epoch, start_timer,
+                #             mode='print'), end='', flush=True)
 
-                #print(message(mode='print'), end='', flush=True)
+                print(message(mode='print'), end='', flush=True)
 
                 # debug------------------------------
 

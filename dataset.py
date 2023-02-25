@@ -155,6 +155,7 @@ def run_check_dataset():
     tokenizer = get_tokenizer()
     #create validation and train dataset
     train_df, valid_df = make_fold(ds_train_path, ds_test_path)
+    valid_df.to_csv('valid.csv', index=False)
     #Create dataset using torch.utils.data
     dataset = EnglishDataset(train_df, tokenizer)
     print(dataset)
