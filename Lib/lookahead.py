@@ -1,4 +1,3 @@
-from common import *
 # https://github.com/nachiket273/lookahead_pytorch
 
 

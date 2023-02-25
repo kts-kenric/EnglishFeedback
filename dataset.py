@@ -159,28 +159,28 @@ def run_check_dataset():
     dataset = EnglishDataset(train_df, tokenizer)
     print(dataset)
     #debugging purpose
-    for i in range(100):
-        r = dataset[i]
-        print(r['index'], '-----------')
-        #use tensort list because the dataset is in tensor
-        #check all of the tensor list (3 inside)
-        for k in tensor_list:
-            v = r[k]
-            print(k)
-            print('\t', 'shape:', v.shape)
-            print('\t', 'dtype:', v.dtype)
-            print('\t', 'is_contiguous:', v.is_contiguous())
-            print('\t', 'min/max:', v.min().item(), '/', v.max().item())
-            print('\t', 'value:')
-            print('\t\t', v.reshape(-1)[:8].tolist(), '...')
-            print('\t\t', v.reshape(-1)[-8:].tolist())
-        print('')
+    # for i in range(100):
+    #     r = dataset[i]
+    #     print(r['index'], '-----------')
+    #     #use tensort list because the dataset is in tensor
+    #     #check all of the tensor list (3 inside)
+    #     for k in tensor_list:
+    #         v = r[k]
+    #         print(k)
+    #         print('\t', 'shape:', v.shape)
+    #         print('\t', 'dtype:', v.dtype)
+    #         print('\t', 'is_contiguous:', v.is_contiguous())
+    #         print('\t', 'min/max:', v.min().item(), '/', v.max().item())
+    #         print('\t', 'value:')
+    #         print('\t\t', v.reshape(-1)[:8].tolist(), '...')
+    #         print('\t\t', v.reshape(-1)[-8:].tolist())
+    #     print('')
 
     # def worker_init_fn(worker_id):
     #     np.random.seed(worker_id)
     loader = DataLoader(
         dataset,
-        batch_size = 4,
+        batch_size = 2,
         num_workers = 0,
         pin_memory = False, #speed up the host to device transfer usually
         sampler = SequentialSampler(dataset),
@@ -204,7 +204,7 @@ def run_check_dataset():
             print('\t', 'dtype:', v.dtype)
             print('\t', 'is_contiguous:', v.is_contiguous())
             print('\t', 'value:')
-            print('\t\t', v.reshape(-1)[:8])
+            print('\t\t', v)
         print('')
 
 

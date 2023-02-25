@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformers import AutoTokenizer,AutoConfig,AutoModel, DebertaV2Model
 import numpy as np
+import os
+os.environ['CUDA_VISIBLE_DEVICES']='0'
 
 class Net(nn.Module):
     def __init__(self,num_classes,model_name = "microsoft/deberta-v3-small"):
@@ -62,10 +64,9 @@ def run_check_net():
     #how to get predict batch (remember its a dict )
     out = net(batch)
 
-    # with torch.no_grad:
-    #     #fp 16 mode?
-    #     with torch.cuda.amp.autocast(enable=True):
-    #         out = net(batch)
+    with torch.no_grad():
+        with torch.cuda.amp.autocast(enabled=True):
+            out = net(batch)
 
     print('batch')
     for k, v in batch.items():
