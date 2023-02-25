@@ -14,7 +14,7 @@ is_amp = True  #True #False
 
 ds_train_path = "train.csv"
 ds_test_path = "test.csv"
-num_classes = 5
+num_classes = 6
 
 def do_valid(net, valid_loader):
     valid_metric = 0
@@ -31,7 +31,7 @@ def do_valid(net, valid_loader):
         with torch.no_grad():
             with amp.autocast(enabled=is_amp):
 
-                output = torch.nn.DataParallel(net,batch)
+                output = torch.nn.parallel.data_parallel(net,batch)
                 loss0  = output['l1_loss'].mean()
                 #loss0  = output['mse_loss'].mean()
                 loss1  = output['mcrmse_loss']#.mean()
@@ -42,7 +42,7 @@ def do_valid(net, valid_loader):
         valid_metric += batch_size*np.square(loss1.data.cpu().numpy())
 
         # ------------------------------------------------
-        print('\r %8d / %d %s %s'%(valid_num, len(valid_loader.dataset),str(time.time() - start_timer,'sec')),end='',flush=True)
+        print('\r %8d / %d %s %s'%(valid_num, len(valid_loader.dataset),str(time.time() - start_timer),'sec'),end='',flush=True)
 
     torch.cuda.empty_cache()
     assert(valid_num == len(valid_loader.dataset))
@@ -222,7 +222,7 @@ def run_train():
                 net.output_type = ['loss']
                 optimizer.zero_grad()
                 #with amp.autocast(enabled=is_amp):
-                output = torch.nn.DataParallel(net, batch)
+                output = torch.nn.parallel.data_parallel(net, batch)
                 loss0 = output['l1_loss'].mean()
                 # loss0 = output['mse_loss'].mean()
                 loss1 = output['mcrmse_loss'].mean()

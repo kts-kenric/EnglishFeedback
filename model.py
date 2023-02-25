@@ -6,6 +6,12 @@ import numpy as np
 import os
 os.environ['CUDA_VISIBLE_DEVICES']='0'
 
+def criterion_mcrmse(predict, truth):
+    diff = (predict-truth)**2
+    loss = diff.mean(0)
+    loss = torch.sqrt(loss)
+    return loss
+
 class Net(nn.Module):
     def __init__(self,num_classes,model_name = "microsoft/deberta-v3-small"):
         super().__init__()
@@ -30,6 +36,7 @@ class Net(nn.Module):
         if 'loss' in self.output_type:
             output['mse_loss'] = F.mse_loss(out,batch['target'])
             output['l1_loss'] = F.smooth_l1_loss(out,batch['target'])
+            output['mcrmse_loss'] = criterion_mcrmse(out,batch['target'])
 
         if 'inference' in self.output_type:
             output['predict'] = out
