@@ -62,7 +62,8 @@ class Net(nn.Module):
         #     nn.Linear(config.hidden_size, num_target) for i in range(3)
         # ])
 
-        self.predict =nn.Sequential(
+
+        self.predict = nn.Sequential(
             nn.Linear(config.hidden_size, 512),
             nn.LayerNorm(512),
             nn.SiLU(),

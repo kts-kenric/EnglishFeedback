@@ -55,7 +55,7 @@ def do_valid(net, valid_loader):
 
 ##########################################################################################################
 # https://github.com/jamescalam/transformers/blob/main/course/training/03_mlm_training.ipynb
-def run_train(
+def run_train_test(
 
 ):
 	fold = 0

@@ -211,7 +211,6 @@ def run_check_dataset():
 # test_text = train_df.iloc[0]["full_text"]
 # print(test_text)
 # print(text_to_token(test_text,tokenizer))
+if __name__ == '__main__':
+    run_check_dataset()
 
-run_check_dataset()
-
-print("success")
